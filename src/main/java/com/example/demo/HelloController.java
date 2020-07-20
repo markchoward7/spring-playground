@@ -1,14 +1,19 @@
 package com.example.demo;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class HelloController {
+
+    @GetMapping("/")
+    public String home() { return "home"; }
 
     @GetMapping("/math/pi")
     public String helloWorld() {
@@ -59,6 +64,8 @@ public class HelloController {
         return String.valueOf(result);
     }
 
-    @GetMapping("/")
-    public String home() { return "home"; }
+    @GetMapping("/math/volume/{length}/{width}/{height}")
+    public String volume(@PathVariable int length, @PathVariable int width, @PathVariable int height) {
+        return String.format("The volume of a %d. %d. %d. rectangle is %d", length, width, height, length * width * height);
+    }
 }
