@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
@@ -64,8 +61,35 @@ public class HelloController {
         return String.valueOf(result);
     }
 
-    @GetMapping("/math/volume/{length}/{width}/{height}")
+    @RequestMapping(value="/math/volume/{length}/{width}/{height}", method={ RequestMethod.GET, RequestMethod.POST })
     public String volume(@PathVariable int length, @PathVariable int width, @PathVariable int height) {
-        return String.format("The volume of a %d. %d. %d. rectangle is %d", length, width, height, length * width * height);
+        return String.format("The volume of a %d, %d, %d rectangle is %d.", length, width, height, length * width * height);
+    }
+
+    @PostMapping("/math/area")
+    public String area(WebRequest request, HttpServletResponse response) {
+        float r = 0f;
+        int w = 0;
+        int h = 0;
+
+        String type = request.getParameter("type");
+        if (type.equals("circle")) {
+            try {
+                r = Float.parseFloat(request.getParameter("radius"));
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return "Invalid";
+            }
+            return String.format("Area of a circle with a radius of %.1f is %.1f", r, 3.14 * Math.pow(r, 2));
+        } else {
+            try {
+                w = Integer.parseInt(request.getParameter("width"));
+                h = Integer.parseInt(request.getParameter("height"));
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return "Invalid";
+            }
+            return String.format("Area of a %dx%d rectangle is %d", w, h, w*h);
+        }
     }
 }
