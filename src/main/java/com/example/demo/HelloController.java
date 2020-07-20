@@ -10,4 +10,7 @@ public class HelloController {
     public String helloWorld() {
         return "3.141592653589793";
     }
+
+    @GetMapping("/")
+    public String home() { return "home"; }
 }
