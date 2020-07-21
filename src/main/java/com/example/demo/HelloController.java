@@ -1,10 +1,14 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import netscape.javascript.JSObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class HelloController {
@@ -116,7 +120,6 @@ public class HelloController {
     @GetMapping("/flights")
     public Flight[] getFlights() {
         Flight[] flights = new Flight[2];
-
         flights[0] = new Flight();
         flights[0].setDeparts(new Date());
         Flight.Ticket[] tickets1 = new Flight.Ticket[2];
@@ -144,5 +147,16 @@ public class HelloController {
         flights[1].setTickets(tickets2);
 
         return flights;
+    }
+
+    @PostMapping("flights/tickets/total")
+    public Map<String, Integer> sum(@RequestBody() Flight flight) {
+        Map<String, Integer> result = new HashMap<>();
+        int cost = 0;
+        for (Flight.Ticket ticket : flight.getTickets()) {
+            cost += ticket.getPrice();
+        }
+        result.put("result", cost);
+        return result;
     }
 }

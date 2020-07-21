@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Flight {
@@ -23,9 +24,17 @@ public class Flight {
     public Ticket[] getTickets() {
         return tickets;
     }
-
+    @JsonProperty("tickets")
     public void setTickets(Ticket[] tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "departs=" + departs +
+                ", tickets=" + Arrays.toString(tickets) +
+                '}';
     }
 
     static class Ticket {
@@ -36,7 +45,7 @@ public class Flight {
         public Person getPassenger() {
             return passenger;
         }
-
+        @JsonProperty("passenger")
         public void setPassenger(Person passenger) {
             this.passenger = passenger;
         }
@@ -45,9 +54,17 @@ public class Flight {
         public int getPrice() {
             return price;
         }
-
+        @JsonProperty("price")
         public void setPrice(int price) {
             this.price = price;
+        }
+
+        @Override
+        public String toString() {
+            return "Ticket{" +
+                    "passenger=" + passenger +
+                    ", price=" + price +
+                    '}';
         }
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -59,7 +76,7 @@ public class Flight {
             public String getFirstName() {
                 return firstName;
             }
-
+            @JsonProperty("firstName")
             public void setFirstName(String firstName) {
                 this.firstName = firstName;
             }
@@ -68,9 +85,17 @@ public class Flight {
             public String getLastName() {
                 return lastName;
             }
-
+            @JsonProperty("lastName")
             public void setLastName(String lastName) {
                 this.lastName = lastName;
+            }
+
+            @Override
+            public String toString() {
+                return "Person{" +
+                        "firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        '}';
             }
         }
     }
