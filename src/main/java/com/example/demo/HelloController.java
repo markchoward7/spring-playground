@@ -1,10 +1,10 @@
 package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @RestController
 public class HelloController {
@@ -91,5 +91,58 @@ public class HelloController {
             }
             return String.format("Area of a %dx%d rectangle is %d", w, h, w*h);
         }
+    }
+
+    @GetMapping("/flights/flight")
+    public Flight getFlight() {
+        Flight flight = new Flight();
+        flight.setDeparts(new Date());
+        Flight.Ticket[] tickets = new Flight.Ticket[2];
+        Flight.Ticket.Person person1 = new Flight.Ticket.Person();
+        Flight.Ticket.Person person2 = new Flight.Ticket.Person();
+        person1.setFirstName("Homer");
+        person1.setLastName("Simpson");
+        person2.setFirstName("Marge");
+        tickets[0] = new Flight.Ticket();
+        tickets[0].setPassenger(person1);
+        tickets[0].setPrice(200);
+        tickets[1] = new Flight.Ticket();
+        tickets[1].setPassenger(person2);
+        tickets[1].setPrice(199);
+        flight.setTickets(tickets);
+        return flight;
+    }
+
+    @GetMapping("/flights")
+    public Flight[] getFlights() {
+        Flight[] flights = new Flight[2];
+
+        flights[0] = new Flight();
+        flights[0].setDeparts(new Date());
+        Flight.Ticket[] tickets1 = new Flight.Ticket[2];
+        Flight.Ticket.Person person1 = new Flight.Ticket.Person();
+        Flight.Ticket.Person person2 = new Flight.Ticket.Person();
+        person1.setFirstName("Homer");
+        person1.setLastName("Simpson");
+        person2.setFirstName("Marge");
+        tickets1[0] = new Flight.Ticket();
+        tickets1[0].setPassenger(person1);
+        tickets1[0].setPrice(200);
+        tickets1[1] = new Flight.Ticket();
+        tickets1[1].setPassenger(person2);
+        tickets1[1].setPrice(199);
+        flights[0].setTickets(tickets1);
+
+        flights[1] = new Flight();
+        flights[1].setDeparts(new Date());
+        Flight.Ticket[] tickets2 = new Flight.Ticket[1];
+        Flight.Ticket.Person person3 = new Flight.Ticket.Person();
+        person3.setLastName("Flanders");
+        tickets2[0] = new Flight.Ticket();
+        tickets2[0].setPassenger(person3);
+        tickets2[0].setPrice(500);
+        flights[1].setTickets(tickets2);
+
+        return flights;
     }
 }
