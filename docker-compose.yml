@@ -21,7 +21,7 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=super-secret-squirrel
-      - MYSQL_DATABASE=database_name
+      - MYSQL_DATABASE=database-name
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
 
