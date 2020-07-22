@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +47,11 @@ public class HelloController {
         return this.repository.save(oldLesson);
     }
 
+    @GetMapping("/lessons/find")
+    public Lesson getLessonByTitle(@RequestParam(name = "title") String title) { return this.repository.findByTitle(title); }
+
+    @GetMapping("lessons/between")
+    public Iterable<Lesson> between(@RequestParam(name = "date") Date[] dates) { return this.repository.deliveredBetween(dates[0], dates[1]);}
 
 //    @GetMapping("/math/pi")
 //    public String helloWorld() {
