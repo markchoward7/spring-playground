@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class HelloController {
@@ -27,10 +28,17 @@ public class HelloController {
         return this.repository.findAll();
     }
 
+    @GetMapping("/lessons/{id}")
+    public Optional<Lesson> getLesson(@PathVariable long id) { return this.repository.findById(id); }
+
     @PostMapping("/lessons")
     public Lesson create(@RequestBody Lesson lesson) {
         return this.repository.save(lesson);
     }
+
+    @DeleteMapping("/lessons/{id}")
+    public void deleteLesson(@PathVariable long id) { this.repository.deleteById(id); }
+
 
 //    @GetMapping("/math/pi")
 //    public String helloWorld() {
