@@ -39,6 +39,14 @@ public class HelloController {
     @DeleteMapping("/lessons/{id}")
     public void deleteLesson(@PathVariable long id) { this.repository.deleteById(id); }
 
+    @PatchMapping("/lessons/{id}")
+    public Lesson update(@PathVariable long id, @RequestBody Lesson lesson) {
+        Lesson oldLesson = this.repository.findById(id).get();
+        oldLesson.setTitle(lesson.getTitle());
+        oldLesson.setDeliveredOn(lesson.getDeliveredOn());
+        return this.repository.save(oldLesson);
+    }
+
 
 //    @GetMapping("/math/pi")
 //    public String helloWorld() {
